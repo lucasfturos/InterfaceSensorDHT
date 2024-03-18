@@ -39,15 +39,7 @@ void SerialCommunication::serialWrite(QByteArray data) {
     }
 }
 
-// Função que habilita a leitura da porta serial
-// void SerialCommunication::serialRead() {
-//     if (serialDeviceConnected == true) {
-//         // Lê as respostas do dispositivo
-//         serialBuffer += serial->readAll();
-//     }
-// }
-
-// Mostra as respostas de leitura e escrita do dispositivo
+// Mostra as respostas de leitura do dispositivo
 void SerialCommunication::serialDataAvalible() {
     if (serialDeviceConnected == true) {
         // Lê todos os dados disponíveis na porta serial

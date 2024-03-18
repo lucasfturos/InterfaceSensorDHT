@@ -15,7 +15,6 @@ class SerialCommunication : public QObject {
     SerialCommunication();
 
   public slots:
-    // void serialRead();
     void serialDataAvalible();
 
   signals:
