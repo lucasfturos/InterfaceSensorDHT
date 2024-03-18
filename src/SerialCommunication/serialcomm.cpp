@@ -40,25 +40,33 @@ void SerialCommunication::serialWrite(QByteArray data) {
 }
 
 // Função que habilita a leitura da porta serial
-void SerialCommunication::serialRead() {
-    if (serialDeviceConnected == true) {
-        // Lê as respostas do dispositivo
-        serialBuffer += serial->readAll();
-    }
-}
+// void SerialCommunication::serialRead() {
+//     if (serialDeviceConnected == true) {
+//         // Lê as respostas do dispositivo
+//         serialBuffer += serial->readAll();
+//     }
+// }
 
 // Mostra as respostas de leitura e escrita do dispositivo
 void SerialCommunication::serialDataAvalible() {
     if (serialDeviceConnected == true) {
-        // Mostra as mensagens de leitura
-        serialRead();
-        qDebug() << "Recebido: " << serialBuffer;
-        if (serialBuffer.indexOf("]") != -1) {
-            qDebug() << "Messagem do dispositivo: " << serialBuffer;
-            // Manda um aviso para confirmar a resposta do dispositivo
-            serialWrite("echo");
-            emit newDataAvailable(serialBuffer);
-            serialBuffer = "";
+        // Lê todos os dados disponíveis na porta serial
+        QByteArray data = serial->readAll();
+        // Adiciona os dados lidos ao buffer
+        serialBuffer.append(data);
+
+        // Verifica se há uma mensagem completa no buffer
+        while (serialBuffer.contains('\n')) {
+            // Encontra a posição do primeiro '\n'
+            int newlinePos = serialBuffer.indexOf('\n');
+            // Extrai a mensagem até o primeiro '\n'
+            QByteArray message = serialBuffer.left(newlinePos + 1);
+            // Remove a mensagem do buffer
+            serialBuffer.remove(0, newlinePos + 1);
+
+            // Emite o sinal com a mensagem completa
+            qDebug() << "Recebido: " << message;
+            emit newDataAvailable(message);
         }
     }
 }

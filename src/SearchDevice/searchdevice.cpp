@@ -1,7 +1,6 @@
 #include "searchdevice.hpp"
 
-SearchDevice::SearchDevice(QObject *parent,
-                           std::shared_ptr<SerialCommunication> comSerial)
+SearchDevice::SearchDevice(QObject *parent, std::shared_ptr<SerialCommunication> comSerial)
     : QObject(parent), commSerial(comSerial) {
     setupSerial();
 }
@@ -25,10 +24,8 @@ void SearchDevice::setupSerial() {
 
     // Conecta os slots aos sinais dos botões
     if (btnConnect && btnDisconnect) {
-        connect(btnConnect, SIGNAL(clicked()), this,
-                SLOT(onConnectButtonClicked()));
-        connect(btnDisconnect, SIGNAL(clicked()), this,
-                SLOT(onDisconnectButtonClicked()));
+        connect(btnConnect, SIGNAL(clicked()), this, SLOT(onConnectButtonClicked()));
+        connect(btnDisconnect, SIGNAL(clicked()), this, SLOT(onDisconnectButtonClicked()));
     } else {
         qDebug() << "Buttons not found.";
     }
@@ -37,8 +34,7 @@ void SearchDevice::setupSerial() {
 }
 
 // Ação para conectar com o dispositivo
-void SearchDevice::connectDevice(const QString &selectedPort,
-                                 const QString &selectedBaud) {
+void SearchDevice::connectDevice(const QString &selectedPort, const QString &selectedBaud) {
     // Mostra as portas USBs disponíveis
     commSerial->serial->setPortName(selectedPort.toUtf8());
     // commSerial->serial->setPortName("/dev/pts/1"); // Porta virtual de
@@ -48,8 +44,7 @@ void SearchDevice::connectDevice(const QString &selectedPort,
     // Caso tenha escolhido a porta tal, realiza a conexão
     if (commSerial->serial->open(QIODevice::ReadWrite)) {
         if (!commSerial->serial->setBaudRate(selectedBaud.toInt())) {
-            qDebug() << "Conectado com taxa de transmissão de "
-                     << selectedBaud.toInt();
+            qDebug() << "Conectado com taxa de transmissão de " << selectedBaud.toInt();
             qDebug() << commSerial->serial->errorString();
         }
         if (!commSerial->serial->setDataBits(QSerialPort::Data8)) {
@@ -76,8 +71,7 @@ void SearchDevice::connectDevice(const QString &selectedPort,
              // texto
         m_statusConnection = "error";
 
-        qDebug() << "Ocorreu um erro ao se conectar a porta "
-                 << commSerial->serial->portName();
+        qDebug() << "Ocorreu um erro ao se conectar a porta " << commSerial->serial->portName();
         qDebug() << "Error: " << commSerial->serial->errorString();
         commSerial->serialDeviceConnected = false;
 
@@ -91,13 +85,12 @@ void SearchDevice::disconnectDevice(const QString &selectedPort) {
     // Caso tenha um dispositivo conectado, realiza a desconexão do mesmo
     if (commSerial->serialDeviceConnected) {
         commSerial->serial->close();
-        commSerial->serialDeviceConnected = false;
-        qDebug() << "A porta" << selectedPort
-                 << "foi desconectada com sucesso.";
+        qDebug() << "A porta" << selectedPort << "foi desconectada com sucesso.";
 
         // Atualiza o aviso de desconexão bem sucedida
         // Ao desconectar, fecha a janela da área de controle
-        m_statusConnection = "desconnected";
+        m_statusConnection = "disconnected";
+        commSerial->serialDeviceConnected = false;
 
         emit statusConnectionChanged();
         emit connectionStatusChanged();
@@ -107,6 +100,7 @@ void SearchDevice::disconnectDevice(const QString &selectedPort) {
         m_statusConnection = "error";
 
         qDebug() << "Nenhum dispositivo conectado";
+        commSerial->serialDeviceConnected = false;
 
         emit statusConnectionChanged();
         emit connectionStatusChanged();

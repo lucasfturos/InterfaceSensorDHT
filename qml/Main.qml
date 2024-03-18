@@ -66,7 +66,7 @@ Window {
                         return "green";
                     case "radio":
                         return "purple"
-                    case "desconnected":
+                    case "disconnected":
                         textShowStatus.text = "Desconectado";
                         return "red";
                     case "error":
@@ -146,17 +146,21 @@ Window {
             Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
 
             onClicked: {
-                if (!root.homeWindow && searchDevice.connected) {
-                    var component = Qt.createComponent("Home.qml")
-                    root.homeWindow = component.createObject(root)
-                    searchDevice.connectDevice(cbPort.currentText, cbBaud.currentText)
-                    root.connectionState = "connected";
-                }
-                if (!searchDevice.connected) {
+                if (cbPort.currentIndex !== 0 && cbBaud.currentIndex !== 0) {
+                    if (!root.homeWindow && searchDevice.connectionState !== "connected") {
+                        var component = Qt.createComponent("Home.qml")
+                        root.homeWindow = component.createObject(root)
+                        searchDevice.connectDevice(cbPort.currentText, cbBaud.currentText)
+                        root.connectionState = "connected";
+                        root.homeWindow.visible = true
+                    } else {
+                        disconnectTimer.start();
+                        root.connectionState = "error";
+                    }
+                } else  {
                     disconnectTimer.start();
                     root.connectionState = "error";
                 }
-                root.homeWindow.visible = true
             }
         }
 
@@ -169,17 +173,17 @@ Window {
             Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
 
             onClicked: {
+                disconnectTimer.start();
+
                 if (root.homeWindow && searchDevice.connected) {
                     root.homeWindow.close()
                     root.homeWindow = null
-                    disconnectTimer.start();
-                    root.connectionState = "desconnected";
+                    root.connectionState = "disconnected";
                     searchDevice.disconnectDevice(cbPort.currentText)
+                } else {
+                    root.connectionState = "error"
                 }
-                if (!searchDevice.connected) {
-                    disconnectTimer.start();
-                    root.connectionState = "error";
-                }
+
             }
         }
 
@@ -197,7 +201,7 @@ Window {
                     root.homeWindow = component.createObject(root)
                 }
                 root.homeWindow.visible = true
-                root.connectionState = "radio";
+                root.connectionState = "radio"
             }
         }
     }
