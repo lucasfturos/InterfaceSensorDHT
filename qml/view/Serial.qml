@@ -122,7 +122,7 @@ Item {
             onClicked: {
                 if (cbPort.currentIndex !== 0 && cbBaud.currentIndex !== 0) {
                     if (!root.homeWindow && searchDevice.connectionState !== "connected") {
-                        var component = Qt.createComponent("Home.qml")
+                        var component = Qt.createComponent("qrc:/qml/Home.qml")
                         root.homeWindow = component.createObject(root)
                         searchDevice.connectDevice(cbPort.currentText, cbBaud.currentText)
                         root.connectionState = "connected";

@@ -31,12 +31,13 @@ set(PROJECT_SOURCES
 )
 
 set(PROJECT_QML
+    # Window
+    qml/Home.qml
     qml/Main.qml
     # View
-    qml/view/Home.qml
+    qml/view/Radio.qml
     qml/view/Serial.qml
     qml/view/Server.qml
-    qml/view/Radio.qml
 )
 
 include_directories(

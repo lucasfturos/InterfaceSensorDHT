@@ -21,6 +21,12 @@ Item {
             Layout.preferredWidth: 155
             Layout.preferredHeight: 70
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
+            onClicked: {
+                var component = Qt.createComponent("../Home.qml")
+                root.homeWindow = component.createObject(root)
+                root.homeWindow.visible = true
+            }
         }
     }
 }
