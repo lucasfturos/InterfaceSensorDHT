@@ -30,6 +30,15 @@ set(PROJECT_SOURCES
     src/main.cpp
 )
 
+set(PROJECT_QML
+    qml/Main.qml
+    # View
+    qml/view/Home.qml
+    qml/view/Serial.qml
+    qml/view/Server.qml
+    qml/view/Radio.qml
+)
+
 include_directories(
     "${CMAKE_CURRENT_SOURCE_DIR}/src/SensorDHT"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/SearchDevice"
@@ -45,8 +54,7 @@ qt_add_qml_module(appInterfaceSensorDHT
     URI InterfaceSensorDHT
     VERSION 1.0
     RESOURCES
-    QML_FILES qml/Home.qml
-    QML_FILES qml/Main.qml
+    QML_FILES ${PROJECT_QML}
 )
 
 set_target_properties(appInterfaceSensorDHT PROPERTIES
