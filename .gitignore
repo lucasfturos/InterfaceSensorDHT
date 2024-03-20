@@ -75,3 +75,7 @@ CMakeLists.txt.user*
 # Build file
 # ----------
 build/
+
+# Docs file
+# ----------
+docs/*.css

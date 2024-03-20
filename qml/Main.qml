@@ -22,8 +22,8 @@ Window {
     property string connectionState: "default"
 
     Timer {
-        id: disconnectTimer
-        interval: 2000
+        id: stateTimer
+        interval: 1000
         repeat: false
         onTriggered: {
             root.connectionState = "default";

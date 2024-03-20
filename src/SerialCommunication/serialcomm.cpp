@@ -1,11 +1,9 @@
 #include "serialcomm.hpp"
 
-// Construtor da classe Comunicação Serial
 SerialCommunication::SerialCommunication()
     : serial(std::make_shared<QSerialPort>()),
       serialInfo(std::make_shared<QSerialPortInfo>()) {}
 
-// Função que pega a porta e baud rate disponiveis
 std::tuple<QStringList, QStringList>
 SerialCommunication::getAvalilableSerialDevice() {
     qDebug() << "Número de portas disponiveis: "
@@ -28,7 +26,6 @@ SerialCommunication::getAvalilableSerialDevice() {
     return std::make_tuple(infoPortList, infoBaudList);
 }
 
-// Função que habilita a escrita para a porta serial
 void SerialCommunication::serialWrite(QByteArray data) {
     if (serialDeviceConnected == true) {
         qDebug() << "Enviando: " << data;
@@ -39,7 +36,6 @@ void SerialCommunication::serialWrite(QByteArray data) {
     }
 }
 
-// Mostra as respostas de leitura do dispositivo
 void SerialCommunication::serialDataAvalible() {
     if (serialDeviceConnected == true) {
         // Lê todos os dados disponíveis na porta serial

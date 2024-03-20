@@ -44,7 +44,7 @@ Item {
                         textShowStatus.text = "Desconectado";
                         return "red";
                     case "error":
-                        textShowStatus.text = "Erro de Conexão";
+                        textShowStatus.text = "Erro de Conexão\t     ";
                         return "orange";
                     default:
                         textShowStatus.text = "Aguardando Conexão";
@@ -122,17 +122,17 @@ Item {
             onClicked: {
                 if (cbPort.currentIndex !== 0 && cbBaud.currentIndex !== 0) {
                     if (!root.homeWindow && searchDevice.connectionState !== "connected") {
-                        var component = Qt.createComponent("qrc:/qml/Home.qml")
+                        var component = Qt.createComponent("../Home.qml")
                         root.homeWindow = component.createObject(root)
                         searchDevice.connectDevice(cbPort.currentText, cbBaud.currentText)
                         root.connectionState = "connected";
                         root.homeWindow.visible = true
                     } else {
-                        disconnectTimer.start();
+                        stateTimer.start();
                         root.connectionState = "error";
                     }
                 } else  {
-                    disconnectTimer.start();
+                    stateTimer.start();
                     root.connectionState = "error";
                 }
             }
@@ -147,7 +147,7 @@ Item {
             Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
 
             onClicked: {
-                disconnectTimer.start();
+                stateTimer.start();
 
                 if (root.homeWindow && searchDevice.connected) {
                     root.homeWindow.close()

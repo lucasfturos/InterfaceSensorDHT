@@ -1,3 +1,5 @@
+# -------------------------------------------------------------------
+
 cmake_minimum_required(VERSION 3.16)
 
 project(InterfaceSensorDHT
@@ -40,12 +42,6 @@ set(PROJECT_QML
     qml/view/Server.qml
 )
 
-include_directories(
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/SensorDHT"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/SearchDevice"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/SerialCommunication"
-)
-
 qt_add_executable(appInterfaceSensorDHT
     ${PROJECT_HEADERS}
     ${PROJECT_SOURCES}
@@ -65,6 +61,10 @@ set_target_properties(appInterfaceSensorDHT PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
+include_directories(
+    "${CMAKE_CURRENT_SOURCE_DIR}/src"
+)
+
 target_link_libraries(appInterfaceSensorDHT
     PRIVATE Qt6::Quick
     PRIVATE Qt6::Core
@@ -77,3 +77,7 @@ install(TARGETS appInterfaceSensorDHT
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+add_subdirectory(docs)
+
+# -------------------------------------------------------------------

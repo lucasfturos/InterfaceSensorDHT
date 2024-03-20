@@ -25,5 +25,4 @@ void loop() {
     Serial.println(dataString.c_str());
 
     delay(100);
-    dataString.clear();
 }
