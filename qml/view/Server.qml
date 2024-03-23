@@ -16,18 +16,26 @@ Item {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
         }
 
+        Text {
+            color: "#fff"
+            font.pointSize: 14
+            text: qsTr("Inicie o serviço antes de entrar!")
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+        }
+
         Button {
-            text: qsTr("Teste")
+            id: btnEntrar
+            text: qsTr("Entrar")
+            enabled: sensor.isConnectedServer
             Layout.preferredWidth: 155
             Layout.preferredHeight: 70
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
             onClicked: {
-                var component = Qt.createComponent("../Home.qml")
+                var component = Qt.createComponent("qrc:/qml/Home.qml")
                 root.homeWindow = component.createObject(root)
                 root.homeWindow.visible = true
             }
         }
-
     }
 }

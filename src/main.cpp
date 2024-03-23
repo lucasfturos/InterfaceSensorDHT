@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
         engine.get(), &QQmlApplicationEngine::objectCreationFailed, app.get(),
         []() { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
 
-    const QUrl url(u"qrc:/InterfaceSensorDHT/qml/Main.qml"_qs);
+    const QUrl url(u"qrc:/qml/Main.qml"_qs);
     engine->load(url);
 
     return app->exec();

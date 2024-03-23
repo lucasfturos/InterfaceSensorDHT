@@ -5,10 +5,44 @@ SensorDHT::SensorDHT(QObject *parent,
     : QObject(parent), commSerial(comSerial), m_temperature(0.0),
       m_humidity(0.0) {
     connect(commSerial.get(), &SerialCommunication::newDataAvailable, this,
-            &SensorDHT::processReceivedData);
+            &SensorDHT::onSerialReceivedData);
+
+    m_networkManager = std::make_shared<QNetworkAccessManager>();
+    connect(m_networkManager.get(), &QNetworkAccessManager::finished, this,
+            &SensorDHT::onServerReceivedData);
+
+    fetchDataFromServer();
 }
 
-void SensorDHT::processReceivedData(const QByteArray &data) {
+void SensorDHT::fetchDataFromServer() {
+    QNetworkRequest request(QUrl("http://localhost:3000/getData"));
+    QNetworkReply *reply = m_networkManager->get(request);
+    connect(reply, &QNetworkReply::finished, this, [=]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            m_isConnectedServer = true;
+        } else {
+            m_isConnectedServer = false;
+            qDebug() << "Error:" << reply->errorString();
+        }
+        emit isConnectedServerChanged(m_isConnectedServer);
+        reply->deleteLater();
+    });
+}
+
+void SensorDHT::onServerReceivedData(QNetworkReply *reply) {
+    if (reply->error() == QNetworkReply::NoError) {
+        QByteArray data = reply->readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        QJsonObject obj = doc.object();
+        m_temperature = obj["temperature"].toDouble();
+        m_humidity = obj["humidity"].toDouble();
+        emit temperatureChanged(m_temperature);
+        emit humidityChanged(m_humidity);
+    }
+    reply->deleteLater();
+}
+
+void SensorDHT::onSerialReceivedData(const QByteArray &data) {
     QString bufferData(data);
 
     int humidityIndex = bufferData.indexOf("H");

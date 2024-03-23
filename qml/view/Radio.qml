@@ -23,7 +23,7 @@ Item {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
             onClicked: {
-                var component = Qt.createComponent("../Home.qml")
+                var component = Qt.createComponent("qrc:/qml/Home.qml")
                 root.homeWindow = component.createObject(root)
                 root.homeWindow.visible = true
             }

@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/Home.qml</file>
+        <file>qml/Main.qml</file>
+        <file>qml/view/Radio.qml</file>
+        <file>qml/view/Serial.qml</file>
+        <file>qml/view/Server.qml</file>
+        <file>script/index.js</file>
+    </qresource>
+</RCC>

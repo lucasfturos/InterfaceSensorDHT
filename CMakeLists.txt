@@ -7,6 +7,7 @@ project(InterfaceSensorDHT
     LANGUAGES CXX
 )
 
+set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 6.4
@@ -52,6 +53,7 @@ qt_add_qml_module(appInterfaceSensorDHT
     VERSION 1.0
     RESOURCES
     QML_FILES ${PROJECT_QML}
+    RESOURCES qres.qrc
 )
 
 set_target_properties(appInterfaceSensorDHT PROPERTIES

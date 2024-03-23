@@ -79,3 +79,7 @@ build/
 # Docs file
 # ----------
 docs/*.css
+
+# Javascript file
+# ----------
+script/node_modules
