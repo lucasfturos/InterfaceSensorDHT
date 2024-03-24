@@ -34,10 +34,10 @@ void ServerDHT::loop() {
                 return;
             }
 
-            humidityStr = "H=" + std::to_string(h);
-            temperatureStr = "T=" + std::to_string(t);
-            dataSensor = humidityStr + "&" + temperatureStr;
-            std::string serverPath = m_serverName + "setData?" + dataSensor;
+            humidity = "H=" + std::to_string(h);
+            temperature = "T=" + std::to_string(t);
+            dataSensor = humidity + "&" + temperature;
+            serverPath = m_serverName + "setData?" + dataSensor;
 
             http->begin(serverPath.c_str());
             int httpResponseCode = http->GET();

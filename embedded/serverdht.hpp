@@ -14,9 +14,10 @@ class ServerDHT {
 
     float h, t;
 
-    std::string humidityStr;
-    std::string temperatureStr;
+    std::string humidity;
+    std::string temperature;
     std::string dataSensor;
+    std::string serverPath;
 
     std::shared_ptr<DHT> dht;
     std::shared_ptr<WiFiClass> wifi;
