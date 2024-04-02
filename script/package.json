@@ -2,10 +2,28 @@
   "name": "service",
   "version": "1.0.0",
   "description": "WebService ESP32",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node index.js",
-    "watch": "nodemon index.js"
+    "start": "node src/index.js",
+    "watch": "nodemon src/index.js",
+    "lint": "eslint --fix src"
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "extends": "standard",
+    "parserOptions": {
+      "ecmaVersion": "latest"
+    },
+    "rules": {}
+  },
+  "prettierConfig": {
+    "trailingComma": "none",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true
   },
   "author": "Lucas Felipe Turos",
   "license": "MIT",
@@ -13,6 +31,11 @@
     "express": "^4.19.2"
   },
   "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1",
     "nodemon": "^3.1.0"
   }
 }
