@@ -19,12 +19,6 @@
     },
     "rules": {}
   },
-  "prettierConfig": {
-    "trailingComma": "none",
-    "tabWidth": 2,
-    "semi": false,
-    "singleQuote": true
-  },
   "author": "Lucas Felipe Turos",
   "license": "MIT",
   "dependencies": {
